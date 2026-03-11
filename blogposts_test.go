@@ -23,11 +23,7 @@ func TestNewPlogPosts(t *testing.T) {
 		if len(posts) != len(fs) {
 			t.Errorf("\ngot: %v posts\nwant: %v posts", len(posts), len(fs))
 		}
-		got := posts[0]
-		want := blogposts.Post{"two"}
-		if !reflect.DeepEqual(got, want) {
-			t.Errorf("\ngot: %v\nwant: %v", got, want)
-		}
+		assertPostEquality(t, posts[0], blogposts.Post{"two"})
 	})
 
 	t.Run("fs with error ", func(t *testing.T) {
@@ -36,6 +32,13 @@ func TestNewPlogPosts(t *testing.T) {
 			t.Fatal("\nexpect errors but got non")
 		}
 	})
+}
+
+func assertPostEquality(t *testing.T, got, want blogposts.Post) {
+	t.Helper()
+	if !reflect.DeepEqual(got, want) {
+		t.Errorf("\ngot: %v\nwant: %v", got, want)
+	}
 }
 
 type StubFailingFS struct{}
