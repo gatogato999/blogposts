@@ -1,19 +1,24 @@
 package blogposts
 
 import (
+	"bufio"
 	"io"
 )
 
 func newPost(postFile io.Reader) (Post, error) {
-	contents, readError := io.ReadAll(postFile)
-	if readError != nil {
-		return Post{}, readError
-	}
-	post := Post{Title: string(contents[7:])}
+	scnr := bufio.NewScanner(postFile)
+
+	scnr.Scan()
+	titleLine := scnr.Text()
+	scnr.Scan()
+	descLine := scnr.Text()
+
+	post := Post{Title: string(titleLine[7:]), Description: descLine[13:]}
 	return post, nil
 }
 
 // Post : post type
 type Post struct {
-	Title string
+	Title       string
+	Description string
 }

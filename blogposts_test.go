@@ -14,7 +14,8 @@ func TestNewPlogPosts(t *testing.T) {
 	t.Run("fs with no errors", func(t *testing.T) {
 		fs := fstest.MapFS{
 			// "hw.md": {Data: []byte("Title: one")},
-			"hw1.md": {Data: []byte("Title: two")},
+			"hw1.md": {Data: []byte(`Title: Post 1
+Description: Description 1`)},
 		}
 		posts, err := blogposts.NewPostsFromFS(fs)
 		if err != nil {
@@ -23,7 +24,10 @@ func TestNewPlogPosts(t *testing.T) {
 		if len(posts) != len(fs) {
 			t.Errorf("\ngot: %v posts\nwant: %v posts", len(posts), len(fs))
 		}
-		assertPostEquality(t, posts[0], blogposts.Post{"two"})
+		assertPostEquality(t, posts[0], blogposts.Post{
+			Title:       "Post 1",
+			Description: "Description 1",
+		})
 	})
 
 	t.Run("fs with error ", func(t *testing.T) {
