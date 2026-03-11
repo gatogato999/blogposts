@@ -33,6 +33,10 @@ func getFileContents(fileSys fs.FS, file fs.DirEntry) (Post, error) {
 		return Post{}, openError
 	}
 	defer postFile.Close()
+	return newPost(postFile)
+}
+
+func newPost(postFile fs.File) (Post, error) {
 	contents, readError := io.ReadAll(postFile)
 	if readError != nil {
 		return Post{}, readError
