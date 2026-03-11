@@ -8,12 +8,14 @@ import (
 func newPost(postFile io.Reader) (Post, error) {
 	scnr := bufio.NewScanner(postFile)
 
-	scnr.Scan()
-	titleLine := scnr.Text()
-	scnr.Scan()
-	descLine := scnr.Text()
+	readline := func() string {
+		scnr.Scan()
+		return scnr.Text()
+	}
+	title := readline()[7:]
+	description := readline()[13:]
 
-	post := Post{Title: string(titleLine[7:]), Description: descLine[13:]}
+	post := Post{Title: title, Description: description}
 	return post, nil
 }
 
