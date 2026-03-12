@@ -18,7 +18,11 @@ func TestNewPlogPosts(t *testing.T) {
 Description: Description 1
 Tags: rust,borrow-checker
 ---
-this is body`)},
+this is body
+and this is the reminder of the file
+if not sure yet try it
+it may be as long as ever
+how to get it ?`)},
 		}
 		posts, err := blogposts.NewPostsFromFS(fs)
 		if err != nil {
@@ -31,7 +35,11 @@ this is body`)},
 			Title:       "Post 1",
 			Description: "Description 1",
 			Tags:        []string{"rust", "borrow-checker"},
-			Body:        "this is body",
+			Body: `this is body
+and this is the reminder of the file
+if not sure yet try it
+it may be as long as ever
+how to get it ?`,
 		})
 	})
 
@@ -46,7 +54,7 @@ this is body`)},
 func assertPostEquality(t *testing.T, got, want blogposts.Post) {
 	t.Helper()
 	if !reflect.DeepEqual(got, want) {
-		t.Errorf("\ngot: %#v\nwant: %#v", got, want)
+		t.Errorf("\ngot: %#v\n\nwant: %#v", got, want)
 	}
 }
 

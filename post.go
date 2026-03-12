@@ -2,6 +2,8 @@ package blogposts
 
 import (
 	"bufio"
+	"bytes"
+	"fmt"
 	"io"
 	"strings"
 )
@@ -23,8 +25,14 @@ func newPost(postFile io.Reader) (Post, error) {
 	title := readline(titleSeparator)
 	description := readline(descriptionSeparator)
 	tags := strings.Split(readline(tagSeparator), ",")
-	_ = readline("")
-	body := readline("")
+
+	scnr.Scan()
+
+	buf := bytes.Buffer{}
+	for scnr.Scan() {
+		fmt.Fprintln(&buf, scnr.Text())
+	}
+	body := strings.TrimSuffix(buf.String(), "\n")
 
 	return Post{Title: title, Description: description, Tags: tags, Body: body}, nil
 }
