@@ -15,18 +15,20 @@ func TestNewPlogPosts(t *testing.T) {
 		fs := fstest.MapFS{
 			// "hw.md": {Data: []byte("Title: one")},
 			"hw1.md": {Data: []byte(`Title: Post 1
-Description: Description 1`)},
+Description: Description 1
+Tags: rust,borrow-checker`)},
 		}
 		posts, err := blogposts.NewPostsFromFS(fs)
 		if err != nil {
-			t.Fatalf("\nexpect no errors but got : %v", err)
+			t.Fatalf("\nexpect no errors but got : %#v", err)
 		}
 		if len(posts) != len(fs) {
-			t.Errorf("\ngot: %v posts\nwant: %v posts", len(posts), len(fs))
+			t.Errorf("\ngot: %#v posts\nwant: %#v posts", len(posts), len(fs))
 		}
 		assertPostEquality(t, posts[0], blogposts.Post{
 			Title:       "Post 1",
 			Description: "Description 1",
+			Tags:        []string{"rust", "borrow-checker"},
 		})
 	})
 
@@ -41,7 +43,7 @@ Description: Description 1`)},
 func assertPostEquality(t *testing.T, got, want blogposts.Post) {
 	t.Helper()
 	if !reflect.DeepEqual(got, want) {
-		t.Errorf("\ngot: %v\nwant: %v", got, want)
+		t.Errorf("\ngot: %#v\nwant: %#v", got, want)
 	}
 }
 
