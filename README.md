@@ -10,9 +10,7 @@ A TDD example used to convert `.md` file into a social media post.
 Title: Post 1
 Description: Description 1
 Tags: rust,borrow-checker
-
 ---
-
 this is body
 and this is the reminder of the file
 it may be as long as ever
@@ -32,9 +30,9 @@ type Post struct {
 
 ## Haven't Handled Yet:
 
-[ ] incorrect file formats.
-[ ] non `.md` files.
-[ ] unordered file meta data.
+- [ ] incorrect file formats.
+- [ ] non `.md` files.
+- [ ] unordered file meta data.
 
 ## Used in Testing Environment
 
