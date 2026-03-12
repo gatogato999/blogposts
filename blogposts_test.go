@@ -16,7 +16,9 @@ func TestNewPlogPosts(t *testing.T) {
 			// "hw.md": {Data: []byte("Title: one")},
 			"hw1.md": {Data: []byte(`Title: Post 1
 Description: Description 1
-Tags: rust,borrow-checker`)},
+Tags: rust,borrow-checker
+---
+this is body`)},
 		}
 		posts, err := blogposts.NewPostsFromFS(fs)
 		if err != nil {
@@ -29,6 +31,7 @@ Tags: rust,borrow-checker`)},
 			Title:       "Post 1",
 			Description: "Description 1",
 			Tags:        []string{"rust", "borrow-checker"},
+			Body:        "this is body",
 		})
 	})
 

@@ -23,8 +23,10 @@ func newPost(postFile io.Reader) (Post, error) {
 	title := readline(titleSeparator)
 	description := readline(descriptionSeparator)
 	tags := strings.Split(readline(tagSeparator), ",")
+	_ = readline("")
+	body := readline("")
 
-	return Post{Title: title, Description: description, Tags: tags}, nil
+	return Post{Title: title, Description: description, Tags: tags, Body: body}, nil
 }
 
 // Post : post type
@@ -32,4 +34,5 @@ type Post struct {
 	Title       string
 	Description string
 	Tags        []string
+	Body        string
 }
