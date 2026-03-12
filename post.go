@@ -22,19 +22,22 @@ func newPost(postFile io.Reader) (Post, error) {
 		return strings.TrimPrefix(scnr.Text(), separator)
 	}
 
-	title := readline(titleSeparator)
-	description := readline(descriptionSeparator)
-	tags := strings.Split(readline(tagSeparator), ",")
+	return Post{
+		Title:       readline(titleSeparator),
+		Description: readline(descriptionSeparator),
+		Tags:        strings.Split(readline(tagSeparator), ","),
+		Body:        readBody(scnr),
+	}, nil
+}
 
+func readBody(scnr *bufio.Scanner) string {
 	scnr.Scan()
 
 	buf := bytes.Buffer{}
 	for scnr.Scan() {
 		fmt.Fprintln(&buf, scnr.Text())
 	}
-	body := strings.TrimSuffix(buf.String(), "\n")
-
-	return Post{Title: title, Description: description, Tags: tags, Body: body}, nil
+	return strings.TrimSuffix(buf.String(), "\n")
 }
 
 // Post : post type
